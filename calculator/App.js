@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     
     
     flex: 1,
-    backgroundColor: 'orange',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent:'flex-end',
   },
