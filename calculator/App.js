@@ -7,20 +7,24 @@ export default function App() {
   
  
   const [wartosc,setwartosc]=useState('');
-  const value =
+  const [result,setresult]=useState('');
+  
   useEffect(()=>{
     setwartosc('')
+    setresult('')
 
   },[])
+
   const click = (value)=>{
     
   setwartosc(wartosc+value)
-
+  setresult(wartosc+value)
    
   }
  
   const clr =()=>{
-    setwartosc("")  
+    setwartosc("")
+      
   }
   const remove=()=>{
     const lastletterremove = wartosc.slice(0,-1)
@@ -37,6 +41,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.wartosc}>{wartosc}</Text>
+      <Text style={styles.wartosc}>={result}</Text>
       <View style={styles.container2}>
         <TouchableOpacity 
         
