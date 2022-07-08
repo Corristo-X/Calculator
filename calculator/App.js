@@ -3,13 +3,18 @@ import { StyleSheet, Text, View,Image, Dimensions,TouchableOpacity } from 'react
 import {React,useEffect,useState} from 'react'
 
 
+
 export default function App() {
   
  
-  const [wartosc,setwartosc]=useState('');
-  const [result,setresult]=useState('');
+ const [wartosc,setwartosc]=useState('');
+  const [result,setresult]=useState();
+  const [fontsizeresult,setfontsizeResult]=useState(30)
+  const [fontsizewarotsc,setfontsozewartosc]=useState(50)
+ 
   
   useEffect(()=>{
+    
     setwartosc('')
     setresult('')
 
@@ -17,13 +22,29 @@ export default function App() {
 
   const click = (value)=>{
     
-  setwartosc(wartosc+value)
-  setresult(wartosc+value)
    
+ switch(value){
+  case '=':
+    {
+      setfontsizeResult(50)
+      setfontsozewartosc(30)
+      break;
+    }
+  default:
+    {
+      const add = wartosc+value
+      setwartosc(add)
+      const calculate = parseFloat(add)
+      setresult(calculate)
+    }
   }
+}
  
   const clr =()=>{
     setwartosc("")
+    setresult("")
+    setfontsizeResult(30)
+    setfontsozewartosc(50)
       
   }
   const remove=()=>{
@@ -40,8 +61,8 @@ export default function App() {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.wartosc}>{wartosc}</Text>
-      <Text style={styles.wartosc}>={result}</Text>
+      <Text style ={[{fontSize:fontsizewarotsc},styles.wartosc]} >{wartosc}</Text>
+      <Text style ={[{fontSize:fontsizeresult},styles.result]}>={result}</Text>
       <View style={styles.container2}>
         <TouchableOpacity 
         
@@ -156,7 +177,9 @@ export default function App() {
            source={require('./assets/3.png')}
            />
            </TouchableOpacity>
-           <TouchableOpacity>
+           <TouchableOpacity
+           onPress={()=>click('+')}
+           >
             <Image
            source={require('./assets/plus.png')}
            />
@@ -181,7 +204,9 @@ export default function App() {
            source={require('./assets/comma.png')}
            />
            </TouchableOpacity>
-           <TouchableOpacity>
+           <TouchableOpacity
+           onPress={()=>click('=')}
+           >
             <Image
            source={require('./assets/equal.png')}
            />
@@ -209,11 +234,20 @@ const styles = StyleSheet.create({
  
   },
   wartosc:{
-    
-fontSize:40,
+   
+
 width:Dimensions.get('window').width,
 textAlign:'right'
 
 
   },
+  result:{
+    
+    width:Dimensions.get('window').width,
+    textAlign:'right'
+
+  },
+
+
+
 });
