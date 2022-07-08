@@ -1,64 +1,70 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,Image, Dimensions,TouchableOpacity } from 'react-native';
 import {React,useEffect,useState} from 'react'
 
-
-
 export default function App() {
   
- 
- const [wartosc,setwartosc]=useState('');
-  const [result,setresult]=useState();
+ const [wartosc,setwartosc]=useState();
+  const [result,setresult]=useState('');
   const [fontsizeresult,setfontsizeResult]=useState(30)
   const [fontsizewarotsc,setfontsozewartosc]=useState(50)
  
-  
   useEffect(()=>{
-    
     setwartosc('')
     setresult('')
-
   },[])
-
   const click = (value)=>{
-    
-   
  switch(value){
-  case '=':
-    {
-      setfontsizeResult(50)
-      setfontsozewartosc(30)
-      break;
-    }
-  default:
-    {
-      const add = wartosc+value
-      setwartosc(add)
-      const calculate = parseFloat(add)
-      setresult(calculate)
-    }
+    case '=':
+      {
+        setfontsizeResult(50)
+        setfontsozewartosc(30)
+        break;
+      }
+      case '%':
+        {
+          let percentage = parseFloat((wartosc+value))/100
+          setwartosc(wartosc+value)
+          let string = toNumberString(percentage)
+          setresult(string)
+        break;
+        }
+    default:
+      {
+       let add = wartosc+value
+       setwartosc(add)
+       setresult(Math.eval(add))
+    } 
   }
 }
- 
+function toNumberString(num) { 
+  if (Number.isInteger(num)) { 
+    return num + ".0"
+  } else {
+    return num.toString(); 
+  }
+}
+Math.eval = function(str) {
+  for (var i = 0; i < str.length; i++) {
+    if (isNaN(str[i]) && !['+', '-', '/', '*', '%', '**'].includes(str[i])) {
+    }
+  }
+  try {
+    return eval(str)
+  } catch (e) {
+    if (e.name !== 'SyntaxError') throw e
+  }
+}
   const clr =()=>{
     setwartosc("")
     setresult("")
     setfontsizeResult(30)
-    setfontsozewartosc(50)
-      
+    setfontsozewartosc(50)      
   }
   const remove=()=>{
-    const lastletterremove = wartosc.slice(0,-1)
-    setwartosc(lastletterremove)
+    const lastletterremovewartosc = wartosc.slice(0,-1)
+    setwartosc(lastletterremovewartosc)
+    setresult(Math.eval(lastletterremovewartosc))
   }
-
-  
-    
-    //setwartosc(value)
-      
-      
-     
-  
   return (
     <View style={styles.container}>
       <Text style ={[{fontSize:fontsizewarotsc},styles.wartosc]} >{wartosc}</Text>
@@ -79,12 +85,15 @@ export default function App() {
            source={require('./assets/delete.png')}
            />
            </TouchableOpacity>
-           <TouchableOpacity>
+           <TouchableOpacity
+           onPress={()=>click('%')}>
              <Image
            source={require('./assets/%.png')}
            />
            </TouchableOpacity>
-           <TouchableOpacity>
+           <TouchableOpacity
+           onPress={()=>click('/')}
+           >
             <Image
            source={require('./assets/divide.png')}
            />
@@ -115,7 +124,9 @@ export default function App() {
            source={require('./assets/9.png')}
            />
            </TouchableOpacity>
-           <TouchableOpacity>
+           <TouchableOpacity
+           onPress={()=>click('*')}
+           >
             <Image
            source={require('./assets/X.png')}
            />
@@ -146,7 +157,9 @@ export default function App() {
            source={require('./assets/6.png')}
            />
            </TouchableOpacity>
-           <TouchableOpacity>
+           <TouchableOpacity
+           onPress={()=>click('-')}
+           >
             <Image
            source={require('./assets/-.png')}
            />
@@ -186,7 +199,8 @@ export default function App() {
            </TouchableOpacity>
     </View>
     <View style={styles.container2}>
-    <TouchableOpacity>
+    <TouchableOpacity
+    onPress={()=>alert("brak rozbudowanego kalkulatora")}>
     <Image
            source={require('./assets/extension.png')}
            />
@@ -199,7 +213,9 @@ export default function App() {
            source={require('./assets/0.png')}
            />
            </TouchableOpacity>
-           <TouchableOpacity>
+           <TouchableOpacity
+           onPress={()=>click('.')}
+           >
              <Image
            source={require('./assets/comma.png')}
            />
